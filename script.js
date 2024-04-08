@@ -44,7 +44,24 @@ const diceDisplay = function (value) {
   // This function sets the display for the dice's picture
   theDice.style.display = value;
 };
-const resetGame = function () {
+
+diceDisplay('none');
+for (let i = 0; i < overallScores.length; i++) {
+  // console.log(overallScores[i]);
+  overallScores[i].textContent = '0';
+  currentScores[i].textContent = '0';
+}
+disableGame(false);
+
+const playerWon = function (player) {
+  player.classList.add('player--winner');
+  disableGame(true);
+  for (let i = 0; i < currentScores.length; i++) {
+    currentScores[i].textContent = '0';
+  }
+};
+
+newGameBtn.addEventListener('click', function () {
   // Function resets the game when the "New Game" button is clicked
   document.querySelector('.player--active').classList.remove('player--winner');
   if (playerOneSect.classList.contains('player--active')) {
@@ -58,9 +75,9 @@ const resetGame = function () {
     currentScores[i].textContent = '0';
   }
   disableGame(false);
-};
+});
 
-const diceBtnFunc = function () {
+rollDiceBtn.addEventListener('click', function () {
   // This function defines the roll dice button
   randomDiceNum = Math.floor(Math.random() * (7 - 1) + 1);
   theDice.setAttribute('src', dices[randomDiceNum]);
@@ -75,16 +92,9 @@ const diceBtnFunc = function () {
   if (randomDiceNum === 1) {
     switchPlayer();
   }
-};
-const playerWon = function (player) {
-  player.classList.add('player--winner');
-  disableGame(true);
-  for (let i = 0; i < currentScores.length; i++) {
-    currentScores[i].textContent = '0';
-  }
-};
+});
 
-const holdBtnFunc = function () {
+holdScoreBtn.addEventListener('click', function () {
   if (playerZeroSect.classList.contains('player--active')) {
     pZeroOverallScore.textContent =
       +pZeroOverallScore.textContent + +pZeroCurrentScore.textContent;
@@ -98,8 +108,4 @@ const holdBtnFunc = function () {
       ? playerWon(document.querySelector('.player--active'))
       : switchPlayer();
   }
-};
-
-newGameBtn.addEventListener('click', resetGame);
-rollDiceBtn.addEventListener('click', diceBtnFunc);
-holdScoreBtn.addEventListener('click', holdBtnFunc);
+});
