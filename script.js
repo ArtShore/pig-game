@@ -1,6 +1,7 @@
 'use strict';
 
 // Elements that i need are listed and grabbed from the DOM below
+let activePlayer = document.querySelector('.player--active');
 const playerZeroSect = document.querySelector('.player--0');
 const playerOneSect = document.querySelector('.player--1');
 const pZeroOverallScore = document.querySelector('#score--0');
@@ -25,15 +26,6 @@ const dices = {
 };
 let randomDiceNum;
 
-// const rollTheDice = function () {
-//   randomDiceNum = Math.floor(Math.random() * (7 - 1) + 1);
-//   return randomDiceNum;
-// };
-// rollTheDice();
-// console.log(dices[randomDiceNum]);
-// theDice.setAttribute('src', dices[randomDiceNum]);
-// console.log(theDice.src);
-
 const switchPlayer = function () {
   if (playerZeroSect.classList.contains('player--active')) {
     pZeroCurrentScore.textContent = 0;
@@ -45,20 +37,28 @@ const switchPlayer = function () {
     playerZeroSect.classList.add('player--active');
   }
 };
-
+const disableGame = function (bool) {
+  rollDiceBtn.disabled = bool;
+  holdScoreBtn.disabled = bool;
+};
 const diceDisplay = function (value) {
   // This function sets the display for the dice's picture
   theDice.style.display = value;
 };
 const resetGame = function () {
   // Function resets the game when the "New Game" button is clicked
+  activePlayer.classList.remove('player--winner');
   if (playerOneSect.classList.contains('player--active')) {
     playerOneSect.classList.remove('player--active');
     playerZeroSect.classList.add('player--active');
   }
   diceDisplay('none');
-  overallScores.textContent = '0';
-  currentScores.textContent = '0';
+  for (let i = 0; i < overallScores.length; i++) {
+    // console.log(overallScores[i]);
+    overallScores[i].textContent = '0';
+    currentScores[i].textContent = '0';
+  }
+  disableGame(false);
 };
 
 const diceBtnFunc = function () {
@@ -77,6 +77,27 @@ const diceBtnFunc = function () {
     switchPlayer();
   }
 };
+const playerWon = function (player) {
+  player.classList.add('player--winner');
+  disableGame(true);
+};
+
+const holdBtnFunc = function () {
+  if (playerZeroSect.classList.contains('player--active')) {
+    pZeroOverallScore.textContent =
+      +pZeroOverallScore.textContent + +pZeroCurrentScore.textContent;
+    +pZeroOverallScore.textContent >= 100
+      ? playerWon(activePlayer)
+      : switchPlayer();
+  } else {
+    pOneOverallScore.textContent =
+      +pOneOverallScore.textContent + +pOneCurrentScore.textContent;
+    +pOneOverallScore.textContent >= 100
+      ? playerWon(activePlayer)
+      : switchPlayer();
+  }
+};
 
 newGameBtn.addEventListener('click', resetGame);
 rollDiceBtn.addEventListener('click', diceBtnFunc);
+holdScoreBtn.addEventListener('click', holdBtnFunc);
