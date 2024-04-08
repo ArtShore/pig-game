@@ -60,7 +60,7 @@ const playerWon = function (player) {
 //////////////////////////////////////////// Event handlers ////////////////////////////////////////////
 
 newGameBtn.addEventListener('click', function () {
-  // Function resets the game when the "New Game" button is clicked
+  // Function resets the game when the "New Game" button is clicked ///////////////////////////////////
   document.querySelector('.player--active').classList.remove('player--winner');
   if (playerOneSect.classList.contains('player--active')) {
     playerOneSect.classList.remove('player--active');
@@ -68,7 +68,6 @@ newGameBtn.addEventListener('click', function () {
   }
   diceDisplay('none');
   for (let i = 0; i < overallScores.length; i++) {
-    // console.log(overallScores[i]);
     overallScores[i].textContent = '0';
     currentScores[i].textContent = '0';
   }
@@ -76,7 +75,7 @@ newGameBtn.addEventListener('click', function () {
 });
 
 rollDiceBtn.addEventListener('click', function () {
-  // This function defines the roll dice button
+  // This function defines the roll dice button //////////////////////////////////////////////////////
   randomDiceNum = Math.floor(Math.random() * (7 - 1) + 1);
   theDice.setAttribute('src', dices[randomDiceNum]);
   diceDisplay('inline-block');
@@ -93,7 +92,7 @@ rollDiceBtn.addEventListener('click', function () {
 });
 
 holdScoreBtn.addEventListener('click', function () {
-  // defines the hold button
+  // defines the hold button ///////////////////////////////////////////////////////////////////////
   if (playerZeroSect.classList.contains('player--active')) {
     pZeroOverallScore.textContent =
       +pZeroOverallScore.textContent + +pZeroCurrentScore.textContent;
