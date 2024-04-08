@@ -26,6 +26,7 @@ const dices = {
 let randomDiceNum;
 
 const switchPlayer = function () {
+  // Switches the players
   if (playerZeroSect.classList.contains('player--active')) {
     pZeroCurrentScore.textContent = 0;
     playerZeroSect.classList.remove('player--active');
@@ -37,29 +38,26 @@ const switchPlayer = function () {
   }
 };
 const disableGame = function (bool) {
+  // Disables or enables the game once it's finished or restarted
   rollDiceBtn.disabled = bool;
   holdScoreBtn.disabled = bool;
 };
+
 const diceDisplay = function (value) {
   // This function sets the display for the dice's picture
   theDice.style.display = value;
 };
 
-diceDisplay('none');
-for (let i = 0; i < overallScores.length; i++) {
-  // console.log(overallScores[i]);
-  overallScores[i].textContent = '0';
-  currentScores[i].textContent = '0';
-}
-disableGame(false);
-
 const playerWon = function (player) {
+  // this executes what happens when a player wins
   player.classList.add('player--winner');
   disableGame(true);
   for (let i = 0; i < currentScores.length; i++) {
     currentScores[i].textContent = '0';
   }
 };
+
+//////////////////////////////////////////// Event handlers ////////////////////////////////////////////
 
 newGameBtn.addEventListener('click', function () {
   // Function resets the game when the "New Game" button is clicked
@@ -95,6 +93,7 @@ rollDiceBtn.addEventListener('click', function () {
 });
 
 holdScoreBtn.addEventListener('click', function () {
+  // defines the hold button
   if (playerZeroSect.classList.contains('player--active')) {
     pZeroOverallScore.textContent =
       +pZeroOverallScore.textContent + +pZeroCurrentScore.textContent;
