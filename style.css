@@ -149,6 +149,7 @@ main {
 }
 
 .dice {
+  display: none;
   position: absolute;
   left: 50%;
   top: 16.5rem;
