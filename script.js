@@ -1,7 +1,6 @@
 'use strict';
 
 // Elements that i need are listed and grabbed from the DOM below
-let activePlayer = document.querySelector('.player--active');
 const playerZeroSect = document.querySelector('.player--0');
 const playerOneSect = document.querySelector('.player--1');
 const pZeroOverallScore = document.querySelector('#score--0');
@@ -47,7 +46,7 @@ const diceDisplay = function (value) {
 };
 const resetGame = function () {
   // Function resets the game when the "New Game" button is clicked
-  activePlayer.classList.remove('player--winner');
+  document.querySelector('.player--active').classList.remove('player--winner');
   if (playerOneSect.classList.contains('player--active')) {
     playerOneSect.classList.remove('player--active');
     playerZeroSect.classList.add('player--active');
@@ -80,6 +79,9 @@ const diceBtnFunc = function () {
 const playerWon = function (player) {
   player.classList.add('player--winner');
   disableGame(true);
+  for (let i = 0; i < currentScores.length; i++) {
+    currentScores[i].textContent = '0';
+  }
 };
 
 const holdBtnFunc = function () {
@@ -87,13 +89,13 @@ const holdBtnFunc = function () {
     pZeroOverallScore.textContent =
       +pZeroOverallScore.textContent + +pZeroCurrentScore.textContent;
     +pZeroOverallScore.textContent >= 100
-      ? playerWon(activePlayer)
+      ? playerWon(document.querySelector('.player--active'))
       : switchPlayer();
   } else {
     pOneOverallScore.textContent =
       +pOneOverallScore.textContent + +pOneCurrentScore.textContent;
     +pOneOverallScore.textContent >= 100
-      ? playerWon(activePlayer)
+      ? playerWon(document.querySelector('.player--active'))
       : switchPlayer();
   }
 };
